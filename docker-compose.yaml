@@ -1,0 +1,23 @@
+services:
+  trino:
+    image: trinodb/trino
+    container_name: trino
+    restart: unless-stopped
+    ports:
+      - 8080:8080
+
+  # postgres:
+  #   image: postgres:latest
+  #   container_name: postgres
+  #   environment:
+  #     POSTGRES_USER: root
+  #     POSTGRES_PASSWORD: root
+  #     POSTFRES_DB: test
+  #   ports:
+  #     - "5432:5432"
+
+  # cassandra:
+  # redis:
+
+  # networks:
+  # volumes:
