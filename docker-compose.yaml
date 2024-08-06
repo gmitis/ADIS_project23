@@ -1,35 +1,87 @@
 services:
-  trino:
+  trino-coordinator:
     image: trinodb/trino
-    container_name: trino
+    container_name: trino-coordinator
+    hostname: trino-coordinator
     restart: unless-stopped
     ports:
       - 8080:8080
-
-  postgres:
-    image: postgres:latest
-    container_name: postgres
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTFRES_DB: test
-    ports:
-      - "5432:5432"
+      - CATALOG_MANAGEMENT=dynamic
+    volumes:
+      - ./coordinator/config:/etc/trino
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 3G
 
-  cassandra:
-    image: cassandra:latest
-    container_name: cassandra
-    ports:
-      - "9042:9042"
+  trino-worker1:
+    image: trinodb/trino
+    container_name: trino-worker1
+    hostname: trino-worker1
+    restart: unless-stopped
+    volumes:
+      - ./worker/config1:/etc/trino
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1.5G
 
-  redis:
-    image: redis:latest
-    container_name: redis
-    ports:
-      - "6379:6379"
+  trino-worker2:
+    image: trinodb/trino
+    container_name: trino-worker2
+    hostname: trino-worker2
+    restart: unless-stopped
+    volumes:
+      - ./worker/config2:/etc/trino
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1.5G
 
-  # networks:
-  # volumes:
-    # postgres_data:
-    # cassandra_data:
-    # redis_data:
+  trino-worker3:
+    image: trinodb/trino
+    container_name: trino-worker3
+    hostname: trino-worker3
+    restart: unless-stopped
+    volumes:
+      - ./worker/config3:/etc/trino
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1.5G
+
+  # postgres:
+  #   image: postgres:latest
+  #   container_name: postgres
+  #   environment:
+  #     POSTGRES_USER: root
+  #     POSTGRES_PASSWORD: root
+  #     POSTFRES_DB: test
+  #   ports:
+  #     - "5432:5432"
+
+  # cassandra:
+  #   image: cassandra:latest
+  #   container_name: cassandra
+  #   ports:
+  #     - "9042:9042"
+
+  # redis:
+  #   image: redis:latest
+  #   container_name: redis
+  #   ports:
+  #     - "6379:6379"
+
+networks:
+  default:
+    driver: bridge
+# volumes:
+# postgres_data:
+# cassandra_data:
+# redis_data:
+# trino.config:

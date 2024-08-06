@@ -1,6 +1,6 @@
 ### Back log:
 - create kubernetes cluster
-- create a home server and run Kubernetes cluster there
+- create a home server and run Kubernetes cluster there (minikube)
 - search for online free VMs
 
 #### Project:
@@ -15,7 +15,7 @@ Cassandra, Postgre, Redis-> data sources
 Steps:
 
 0. Prep  
-1. Installation/Setup (PrestoDB, Trino, SQL, PostGre, Redis)
+1. Installation/Setup (Trino, SQL, PostGre, Redis)
 2. Data generation 
 3. Query generation 
 4. Measurement of performance 

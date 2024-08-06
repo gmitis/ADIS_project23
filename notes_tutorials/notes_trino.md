@@ -88,15 +88,11 @@ Trino retrieves data from the data sources with the help of the catalog configur
   - contains several connectors
   - every catalog is assosiated with a connector (many to many)
 - catalog:
-
   - contains schemas
   - references data source to a connector
   - catalog.schema.table (hive.test_data.test)
-
 - schema:
-
   - set of tables of data
-
 - table:
   - set of unordered rows organisez into named columns with types
 
@@ -104,23 +100,27 @@ Trino retrieves data from the data sources with the help of the catalog configur
 
 ## Statement
 
-- SQL statement to be executed
+- Trino SQL statement to be executed 
 - further translation of statement and creation of a distributed query execution plan
 
 ## Query
 
 - components (stages, tasks, connectors, splits etc) and configuration used to execute a statement given to Trino
+- translation query and execution plan to be executed in different workers each returning a snapshot of the result
 
 ## Stage
 
 - breaked down parts to execute a distributed query
 - tree of tasks
 - arent executed on Trino workers
-- series of tasks distributed over the cluster
+- model of task distributed over the cluster
+- one stage = series of tasks 
+- stages can share intermediate results of task between themselves
 
 ## Task
 
 - has input and output
+- intermediate steps that are actually executable in a stage
 
 ## Split
 
@@ -164,7 +164,7 @@ webUI:
 
 # Basic commands
 Trino in Docker:
-``` Dockerfile
+``` Bash
 # create and run container
 docker run --name trino -d -p 8080:8080 -e CATALOG_MANAGEMENT=dynamic trinodb/trino     
 
@@ -183,6 +183,8 @@ Start CLI in interactive mode:
 ```   
 
 ---
+
+
 
 
 
