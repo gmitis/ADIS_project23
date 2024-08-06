@@ -10,6 +10,7 @@ services:
       - CATALOG_MANAGEMENT=dynamic
     volumes:
       - ./coordinator/config:/etc/trino
+      - ./catalog:/etc/trino/catalog
     deploy:
       resources:
         limits:
@@ -23,6 +24,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./worker/config1:/etc/trino
+      - ./catalog:/etc/trino/catalog
     deploy:
       resources:
         limits:
@@ -36,6 +38,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./worker/config2:/etc/trino
+      - ./catalog:/etc/trino/catalog
     deploy:
       resources:
         limits:
@@ -49,6 +52,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./worker/config3:/etc/trino
+      - ./catalog:/etc/trino/catalog
     deploy:
       resources:
         limits:
@@ -58,6 +62,7 @@ services:
   # postgres:
   #   image: postgres:latest
   #   container_name: postgres
+  #   hostname: postgres
   #   environment:
   #     POSTGRES_USER: root
   #     POSTGRES_PASSWORD: root
@@ -68,20 +73,17 @@ services:
   # cassandra:
   #   image: cassandra:latest
   #   container_name: cassandra
+  #   hostname: cassandra
   #   ports:
   #     - "9042:9042"
 
   # redis:
   #   image: redis:latest
   #   container_name: redis
+  #   hostname: redis
   #   ports:
   #     - "6379:6379"
 
 networks:
   default:
     driver: bridge
-# volumes:
-# postgres_data:
-# cassandra_data:
-# redis_data:
-# trino.config:
